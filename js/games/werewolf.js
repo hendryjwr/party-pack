@@ -94,11 +94,11 @@ const game = {
       const node = stage(app, `
         <div class="center top">
           <div class="title-l" style="text-align:center">Narrator</div>
-          <div data-win></div>
           <div class="panel"><div class="panel-title">🌙 Night — read aloud</div><ol class="script">${night.map((s) => `<li>${esc(s)}</li>`).join('')}</ol></div>
           <div class="panel"><div class="panel-title">☀️ Day</div><ol class="script">${day.map((s) => `<li>${esc(s)}</li>`).join('')}</ol></div>
           <div class="panel">
             <div class="field"><span class="panel-title">Players · tap to eliminate</span><button class="chip" data-roles>Show roles</button></div>
+            <div data-win></div>
             <div class="seats"></div>
           </div>
         </div>
@@ -127,7 +127,12 @@ const game = {
         const others = seats.filter((s) => s.alive && s.role !== 'werewolf').length;
         const winner = wolves === 0 ? '🎉 Village wins!' : wolves >= others ? '🐺 Werewolves win!' : '';
         winEl.innerHTML = winner ? `<div class="word-card pop"><div class="word sm">${winner}</div></div>` : '';
-        if (winner && !won) { sound('win'); confetti(); }
+        if (winner && !won) {
+          sound('win');
+          confetti();
+          // The narrator is usually scrolled down at the player list — bring the result into view.
+          winEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
         won = Boolean(winner);
       };
 

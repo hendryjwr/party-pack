@@ -98,7 +98,7 @@ const game = {
       stage(app, `
         <div class="center">
           <div class="title-xl pop">Time's up!</div>
-          <div class="title-l">${esc(teams[team])} ${signed(total)}</div>
+          <div class="title-l">${esc(teams[team])} · ${signed(total)} ${Math.abs(total) === 1 ? 'point' : 'points'}</div>
           <div class="list">${log.map((x) => `<div class="list-item ${x.p ? '' : 'no'}"><span>${esc(x.word)}</span><span>${x.p > 0 ? '✓' : x.p < 0 ? '🚫' : 'skip'}</span></div>`).join('')}</div>
           ${scoreboard(teams, scores, 1 - team)}
         </div>
